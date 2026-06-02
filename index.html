@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>資料回報系統</title>
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    input, select, button { width: 100%; padding: 10px; margin: 10px 0; }
+  </style>
+</head>
+<body>
+  <h3>工作回報單</h3>
+  <select id="project">
+    <option value="專案A">專案 A</option>
+    <option value="專案B">專案 B</option>
+  </select>
+  <input type="text" id="memo" placeholder="請輸入細節說明">
+  <button onclick="sendData()">送出回報</button>
+
+  <script>
+    const GAS_URL = '你的_GAS_DEPLOYMENT_URL';
+
+    async function sendData() {
+      // 1. 確保 LIFF 已啟動
+      await liff.init({ liffId: '你的_LIFF_ID' });
+      
+      // 2. 獲取使用者身份
+      const profile = await liff.getProfile();
+      
+      const payload = {
+        userId: profile.userId,
+        userName: profile.displayName,
+        project: document.getElementById('project').value,
+        memo: document.getElementById('memo').value,
+        timestamp: new Date().toISOString()
+      };
+
+      // 3. 發送至 GAS
+      fetch(GAS_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(() => {
+        liff.sendMessages([{
+          type: 'text',
+          text: `[系統通知] ${profile.displayName} 已完成 ${payload.project} 回報。`
+        }]);
+        alert('回報成功！');
+        liff.closeWindow();
+      });
+    }
+  </script>
+</body>
+</html>
