@@ -20,11 +20,11 @@
   <button onclick="sendData()">送出回報</button>
 
   <script>
-    const GAS_URL = '你的_GAS_DEPLOYMENT_URL';
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycby0zhf94fyz9nEF1Vikb8sJWwV_QXxi3Hn78opI3t2bxqcbq-98vuTE6W-MaFxCUcIp6Q/exec';
 
     async function sendData() {
       // 1. 確保 LIFF 已啟動
-      await liff.init({ liffId: '你的_LIFF_ID' });
+      await liff.init({ liffId: '2010284251-ujsQOtpr' });
       
       // 2. 獲取使用者身份
       const profile = await liff.getProfile();
