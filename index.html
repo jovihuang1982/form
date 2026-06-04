@@ -1,57 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>資料回報系統</title>
-  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
-  <style>
-    body { font-family: sans-serif; padding: 20px; }
-    input, select, button { width: 100%; padding: 10px; margin: 10px 0; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工作回報表單</title>
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 </head>
 <body>
-  <h3>工作回報單</h3>
-  <select id="project">
-    <option value="專案A">專案 A</option>
-    <option value="專案B">專案 B</option>
-  </select>
-  <input type="text" id="memo" placeholder="請輸入細節說明">
-  <button onclick="sendData()">送出回報</button>
+    <h3>每日進度回報</h3>
+    <input type="text" id="taskName" placeholder="任務名稱">
+    <select id="status">
+        <option value="進行中">進行中</option>
+        <option value="已完成">已完成</option>
+    </select>
+    <button id="submitBtn">送出回報</button>
 
-  <script>
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycby0zhf94fyz9nEF1Vikb8sJWwV_QXxi3Hn78opI3t2bxqcbq-98vuTE6W-MaFxCUcIp6Q/exec';
+    <script>
+        const LIFF_ID = '2010284251-ujsQOtpr'; // 從 LINE Developers Console 取得
 
-    async function sendData() {
-      // 1. 確保 LIFF 已啟動
-      await liff.init({ liffId: '2010284251-ujsQOtpr' });
-      
-      // 2. 獲取使用者身份
-      const profile = await liff.getProfile();
-      
-      const payload = {
-        userId: profile.userId,
-        userName: profile.displayName,
-        project: document.getElementById('project').value,
-        memo: document.getElementById('memo').value,
-        timestamp: new Date().toISOString()
-      };
+        liff.init({ liffId: LIFF_ID }).then(() => {
+            console.log("LIFF 已初始化");
+        });
 
-      // 3. 發送至 GAS
-      fetch(GAS_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      })
-      .then(() => {
-        liff.sendMessages([{
-          type: 'text',
-          text: `[系統通知] ${profile.displayName} 已完成 ${payload.project} 回報。`
-        }]);
-        alert('回報成功！');
-        liff.closeWindow();
-      });
-    }
-  </script>
+        document.getElementById('submitBtn').addEventListener('click', async () => {
+            // 1. 確保使用者已登入
+            if (!liff.isLoggedIn()) { liff.login(); }
+
+            // 2. 獲取使用者個人資料
+            const profile = await liff.getProfile();
+            
+            // 3. 準備資料並發送
+            const payload = {
+                userName: profile.displayName,
+                task: document.getElementById('taskName').value,
+                status: document.getElementById('status').value
+            };
+
+            fetch('https://script.google.com/macros/s/AKfycby0zhf94fyz9nEF1Vikb8sJWwV_QXxi3Hn78opI3t2bxqcbq-98vuTE6W-MaFxCUcIp6Q/exec', {
+                method: 'POST',
+                body: JSON.stringify(payload)
+            }).then(() => {
+                alert('回報成功！');
+                liff.closeWindow(); // 送出後自動關閉視窗
+            });
+        });
+    </script>
 </body>
 </html>
