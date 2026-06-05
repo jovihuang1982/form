@@ -36,12 +36,11 @@
                 status: document.getElementById('status').value
             };
 
-            fetch('https://script.google.com/macros/s/AKfycby0zhf94fyz9nEF1Vikb8sJWwV_QXxi3Hn78opI3t2bxqcbq-98vuTE6W-MaFxCUcIp6Q/exec', {
-                method: 'POST',
-                body: JSON.stringify(payload)
-            }).then(() => {
-                alert('回報成功！');
-                liff.closeWindow(); // 送出後自動關閉視窗
+            liff.sendMessages([{
+              type: 'text',
+              text: '我已完成回報' // 這會讓機器人收到 message 事件
+            }]).then(() => {
+              liff.closeWindow();
             });
         });
     </script>
