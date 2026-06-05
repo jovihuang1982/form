@@ -35,13 +35,13 @@
                 task: document.getElementById('taskName').value,
                 status: document.getElementById('status').value
             };
+        });
 
-            liff.sendMessages([{
-              type: 'text',
-              text: '我已完成回報' // 這會讓機器人收到 message 事件
-            }]).then(() => {
-              liff.closeWindow();
-            });
+        liff.sendMessages([{
+            type: 'text',
+            text: '我已完成回報' // 這會讓機器人收到 message 事件
+        }]).then(() => {
+            liff.closeWindow();
         });
     </script>
 </body>
