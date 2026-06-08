@@ -34,7 +34,7 @@
 
             liff.sendMessages([{
                 type: 'text',
-                text: '查詢電路編號:' +  taskName// 這會讓機器人收到 message 事件
+                text: '查詢電路編號:'// 這會讓機器人收到 message 事件
             }]).then(() => {
                 liff.closeWindow();
             });
