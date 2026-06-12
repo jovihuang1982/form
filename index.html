@@ -16,6 +16,9 @@
     <button id="submitBtn">送出回報</button>
 
     <script>
+        // 初始化 vConsole
+        var vConsole = new window.VConsole();
+        
         const LIFF_ID = '2010284251-ujsQOtpr'; // 從 LINE Developers Console 取得
 
         liff.init({ liffId: LIFF_ID }).then(() => {
