@@ -144,7 +144,7 @@
 
       liff.sendMessages([{
           type: 'text',
-          text: '查詢電路編號:' + inputVal
+          text: profile.displayName + ':查詢電路編號:' + inputVal
       }]).then(() => {
           liff.closeWindow();
       });
