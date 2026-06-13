@@ -110,26 +110,24 @@
     <h2>專線資料查詢</h2>
     <div class="form-group">
       <input type="text" class="input-box" id="userInput" placeholder="請輸入您的查詢代碼..." autocomplete="off">
-      <button class="submit-btn">送出</button>
+      <button class="submit-btn" id="submitBtn">送出</button>
     </div>
   </div>
 
   <script>
-    document.getElementById('submit-btn').addEventListener('click', async () => {
+    const LIFF_ID = '2010284251-ujsQOtpr'; // 從 LINE Developers Console 取得
+
+    liff.init({ liffId: LIFF_ID }).then(() => {
+            console.log("LIFF 已初始化");
+    });
+
+    document.getElementById('submitBtn').addEventListener('click', async () => {
       const inputVal = document.getElementById('userInput').value.trim();
       
       if (!inputVal) {
         alert('請先輸入資料！');
         return;
       }
-      
-      // 這裡可以接你原本的 LIFF 邏輯，例如：liff.sendMessages(...)
-
-      const LIFF_ID = '2010284251-ujsQOtpr'; // 從 LINE Developers Console 取得
-
-      liff.init({ liffId: LIFF_ID }).then(() => {
-            console.log("LIFF 已初始化");
-      });
 
       // 1. 確保使用者已登入
       if (!liff.isLoggedIn()) { liff.login(); }
