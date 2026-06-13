@@ -122,33 +122,32 @@
     // });
 
     document.getElementById('submitBtn').addEventListener('click', async () => {
-      console.log("onClick");
-      // const inputVal = document.getElementById('userInput').value.trim();
+      const inputVal = document.getElementById('userInput').value.trim();
       
-      // if (!inputVal) {
-      //   alert('請先輸入資料！');
-      //   return;
-      // }
+      if (!inputVal) {
+        alert('請先輸入資料！');
+        return;
+      }
 
-      // // 1. 確保使用者已登入
-      // if (!liff.isLoggedIn()) { liff.login(); }
+      // 1. 確保使用者已登入
+      if (!liff.isLoggedIn()) { liff.login(); }
 
-      // // 2. 獲取使用者個人資料
-      // const profile = await liff.getProfile();
+      // 2. 獲取使用者個人資料
+      const profile = await liff.getProfile();
             
-      // // // 3. 準備資料並發送
-      // // const payload = {
-      // //     userName: profile.displayName,
-      // //     task: document.getElementById('taskName').value,
-      // //     status: document.getElementById('status').value
-      // // };
+      // // 3. 準備資料並發送
+      // const payload = {
+      //     userName: profile.displayName,
+      //     task: document.getElementById('taskName').value,
+      //     status: document.getElementById('status').value
+      // };
 
-      // liff.sendMessages([{
-      //     type: 'text',
-      //     text: '查詢電路編號:' + inputVal
-      // }]).then(() => {
-      //     liff.closeWindow();
-      // });
+      liff.sendMessages([{
+          type: 'text',
+          text: '查詢電路編號:' + inputVal
+      }]).then(() => {
+          liff.closeWindow();
+      });
 
     });
   </script>
