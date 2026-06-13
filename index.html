@@ -110,13 +110,12 @@
     <h2>專線資料查詢</h2>
     <div class="form-group">
       <input type="text" class="input-box" id="userInput" placeholder="請輸入您的查詢代碼..." autocomplete="off">
-      <button class="submit-btn" onclick="handleSubmit()">送出</button>
+      <button class="submit-btn">送出</button>
     </div>
   </div>
 
   <script>
-    // 按鈕點擊事件
-    function handleSubmit() {
+    document.getElementById('submit-btn').addEventListener('click', async () => {
       const inputVal = document.getElementById('userInput').value.trim();
       
       if (!inputVal) {
