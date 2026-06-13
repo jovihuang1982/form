@@ -115,11 +115,11 @@
   </div>
 
   <script>
-    // const LIFF_ID = '2010284251-ujsQOtpr'; // 從 LINE Developers Console 取得
+    const LIFF_ID = '2010284251-ujsQOtpr'; // 從 LINE Developers Console 取得
 
-    // liff.init({ liffId: LIFF_ID }).then(() => {
-    //         console.log("LIFF 已初始化");
-    // });
+    liff.init({ liffId: LIFF_ID }).then(() => {
+            console.log("LIFF 已初始化");
+    });
 
     document.getElementById('submitBtn').addEventListener('click', async () => {
       const inputVal = document.getElementById('userInput').value.trim();
